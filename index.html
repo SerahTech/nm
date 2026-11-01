@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A new month, same answer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1e3a;--bg2:#1d3560;--rose:#f3c87a;--glow:#ffb3c1;--ink:#fff6ee;--paper:#fff8f2;--paper-ink:#2b2f4a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,var(--bg2),var(--bg) 70%);color:var(--ink);font-family:'Fraunces',Georgia,serif;display:flex;justify-content:center;overflow-x:hidden}
+main{width:100%;max-width:440px;padding:28px 22px 60px;text-align:center}
+.stage{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.hidden{display:none}
+
+/* calendar sheet */
+.cal{width:260px;background:var(--paper);color:var(--paper-ink);border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,.45);overflow:hidden;transform-origin:top center;transition:transform .9s cubic-bezier(.6,.05,.3,1),opacity .9s}
+.cal .top{background:#a63a5c;color:#fff;padding:12px;font-size:1.05rem;letter-spacing:.04em}
+.cal .num{font-size:5.5rem;line-height:1.1;padding:18px 0 4px;font-weight:600}
+.cal .sub{padding:0 0 22px;font-style:italic;opacity:.75}
+.cal.flip{transform:perspective(700px) rotateX(-95deg);opacity:0}
+
+button{font-family:inherit;cursor:pointer;border:0;border-radius:999px;padding:14px 26px;font-size:1.05rem;background:var(--rose);color:#3a1a2c;font-weight:600;transition:transform .15s,box-shadow .2s;box-shadow:0 8px 24px rgba(243,200,122,.25)}
+button:hover{transform:translateY(-2px)}
+button:active{transform:scale(.97)}
+button:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+
+h1{font-size:clamp(2rem,9vw,2.7rem);font-weight:600;line-height:1.15;margin:0}
+h1 em{font-weight:400}
+.lead{font-size:1.1rem;line-height:1.6;opacity:.9;margin:0;max-width:34ch}
+
+/* choose lines */
+.lines{min-height:150px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.line{font-size:1.2rem;font-style:italic;opacity:0;animation:rise .7s forwards}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.count{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--glow)}
+
+/* letter */
+.letter{background:var(--paper);color:var(--paper-ink);border-radius:14px;padding:30px 26px;text-align:left;box-shadow:0 20px 50px rgba(0,0,0,.4);animation:rise .9s both}
+.letter p{margin:0 0 14px;line-height:1.7;font-size:1.05rem}
+.sign{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:#a63a5c;margin-top:8px;text-align:right}
+.hug{margin-top:26px}
+.again{margin-top:18px;background:transparent;color:var(--rose);box-shadow:none;border:1px solid var(--rose);font-size:.95rem;padding:10px 20px}
+
+/* floating hearts */
+.heart{position:fixed;bottom:-30px;pointer-events:none;animation:float 3.6s ease-out forwards;z-index:10}
+@keyframes float{to{transform:translateY(-110vh) translateX(var(--dx));opacity:0}}
+@media (prefers-reduced-motion:reduce){.heart{display:none}.cal{transition:none}.line,.letter{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<main>
+
+<section id="s1" class="stage">
+  <div class="cal" id="cal">
+    <div class="top">October</div>
+    <div class="num">31</div>
+    <div class="sub">that was a lot, wasn't it? 🥺</div>
+  </div>
+  <p class="lead">Baby, before you scroll on. I made this for you. 💌</p>
+  <button id="turn">Turn the page 📖</button>
+</section>
+
+<section id="s2" class="stage hidden">
+  <div class="cal" style="transform:none;opacity:1">
+    <div class="top">November</div>
+    <div class="num">1</div>
+    <div class="sub">a brand new month</div>
+  </div>
+  <h1>New month ✨<br><em>Same answer: you 💗</em></h1>
+  <p class="lead">Tap the button 5 times, one for every promise. On the 6th tap, your letter opens.</p>
+  <button id="choose">I choose you 💘</button>
+  <div class="lines" id="lines" aria-live="polite"></div>
+</section>
+
+<section id="s3" class="hidden">
+  <div class="letter">
+    <p>My love, 💕</p>
+    <p>I won't pretend it's always been easy. Some days it has been hard, and I've felt that. But every time I think about how tough it can get, my heart walks right back to you.</p>
+    <p>So here is my promise for a new month: I'd still choose you. Not because everything is perfect, but because you're worth working for, and I hope I am too.</p>
+    <p>I hope we never give up on each other. I hope we keep talking when it's uncomfortable, keep forgiving fast, keep laughing at small things, and keep showing up even on the tired days.</p>
+    <p>You are loved, my heart. Really, deeply loved. 🥰 Please let that sink in today.</p>
+    <div class="sign">your wifeyy 💗</div>
+  </div>
+  <div style="text-align:center">
+    <button class="hug" id="hug">Send me a hug (tap 5 times)</button>
+    <div class="count" id="hugcount"></div>
+    <button class="again" id="replay">Read it again</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var emojis=['💗','💖','💕','🤍','✨','🌷'];
+  function burst(n){
+    for(var i=0;i<n;i++){(function(i){setTimeout(function(){
+      var h=document.createElement('div');
+      h.className='heart';
+      h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      h.style.left=(Math.random()*92+2)+'vw';
+      h.style.fontSize=(18+Math.random()*22)+'px';
+      h.style.setProperty('--dx',(Math.random()*80-40)+'px');
+      document.body.appendChild(h);
+      setTimeout(function(){h.remove()},3700);
+    },i*90)})(i)}
+  }
+  function show(id){['s1','s2','s3'].forEach(function(s){$(s).classList.toggle('hidden',s!==id)});window.scrollTo(0,0)}
+
+  $('turn').onclick=function(){
+    $('cal').classList.add('flip');
+    setTimeout(function(){show('s2');burst(8)},800);
+  };
+
+  var promises=[
+    'I choose you on the soft days. 🌸',
+    'I choose you on the hard days. 💪',
+    'I choose you when we disagree. 🤝',
+    'I choose you when I\u2019m tired. 😴',
+    'I choose you, again, today. 💞'
+  ];
+  var i=0;
+  $('choose').onclick=function(){
+    if(i<promises.length){
+      var d=document.createElement('div');
+      d.className='line';d.textContent=promises[i];
+      $('lines').appendChild(d);
+      i++;burst(6);
+      $('choose').textContent=(i===promises.length)?'Open my letter 💌':'I choose you 💘 ('+i+' of '+promises.length+')';
+    }else{
+      show('s3');burst(18);
+    }
+  };
+
+  var hugs=0;
+  var msgs=['One hug \uD83E\uDEC2','Two, I\u2019m not letting go 🤗','Three, you\u2019re stuck with me 😌','Four, I love you 😘','Five \u2014 and so many more waiting for you 💖'];
+  $('hug').onclick=function(){
+    if(hugs>=5)return;
+    burst(10);
+    hugs++;
+    $('hugcount').textContent=msgs[hugs-1]+'  ('+hugs+' of 5)';
+    if(hugs===5){$('hug').textContent='All 5 hugs sent \uD83D\uDC97';$('hug').disabled=true;}
+  };
+  $('replay').onclick=function(){
+    i=0;$('lines').innerHTML='';$('choose').textContent='I choose you 💘';
+    $('cal').classList.remove('flip');hugs=0;$('hugcount').textContent='';$('hug').disabled=false;$('hug').textContent='Send me a hug (tap 5 times)';
+    show('s2');
+  };
+})();
+</script>
+</body>
+</html>
